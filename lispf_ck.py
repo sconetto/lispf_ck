@@ -31,7 +31,17 @@ def ast_lispf_fc(lispf_ck):
                   'DO_AFTER', 'ADD', 'SUB', 'COMMENT', 'NAME']
 
     parser = ox.make_parser ([
-
+        ('while_loop : LOOP parentesis', lambda loop, x: ('loop', x)),
+        ('while_loop : parentesis', lambda x: x),
+        ('parentesis : LPAR statement RPAR', lambda lpar, x, rpar: x),
+        ('parentesis : statement', lambda x: x),
+        ('statement : NUMBER', lambda x: ('atom', x)),
+        ('statement : READ', lambda x: ('atom', x)),
+        ('statement : PRINT', lambda x: ('atom', x)),
+        ('statement : DEC', lambda x: ('atom', x)),
+        ('statement : INC', lambda x: ('atom', x)),
+        ('statement : LEFT', lambda x: ('atom', x)),
+        ('statement : RIGHT', lambda x: ('atom', x))
     ], token_list)
 
     source = lispf_ck.read()
